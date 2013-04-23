@@ -154,26 +154,36 @@ function computermove()
                 tPar=cat(1,parents,tPar);
                 break;
             end
-            %If we haven't established a base for cutoff, do so.
-            if(isempty(score))
-                score=tscore;
-            end
-                %Pruning by checking for less than min (if trying to min)
-                if(otherTurn==1)
-                    if(tscore<score)
-                        score=tscore;
-                        if iter<4 && w==0
-                            [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,2,parents);
-                            scores=cat(1,tScore,scores);
-                            bArray=cat(1,rBAr,bArray);
-                            tPar=cat(1,rPar,tPar);
-                        elseif iter==4
-                            bArray=cat(1,tempBoard,bArray);
-                        end
-                    end
-                else
+            %Pruning by checking for less than min (if trying to min)
+            if(otherTurn==1)
+              if(~isempty(score))
+                if(tscore<score)
+                  score=tscore;
+                  if iter<4 && w==0
+                    [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,2,parents);
+                    scores=cat(1,tScore,scores);
+                    bArray=cat(1,rBAr,bArray);
+                    tPar=cat(1,rPar,tPar);
+                  elseif iter==4
+                    bArray=cat(1,tempBoard,bArray);
+                  end
+                end
+                %if the score is empty (ie if there's no basis for cutoff, then establish it as the basis and run through its children.
+              else
+                  score=tscore;
+                  if iter<4 && w==0
+                    [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,2,parents);
+                    scores=cat(1,tScore,scores);
+                    bArray=cat(1,rBAr,bArray);
+                    tPar=cat(1,rPar,tPar);
+                  elseif iter==4
+                    bArray=cat(1,tempBoard,bArray);
+                  end
+              end
+            else
                     %Pruning by checking for greater than max (if trying to
                     %max)
+              if(~isempty(score))
                     if(tscore>score)
                         score=tscore;
                         if iter<4 && w==0
@@ -185,6 +195,18 @@ function computermove()
                             bArray=cat(1,tempBoard,bArray);
                         end
                     end
+                %if the score is empty (ie if there's no basis for cutoff, then establish it as the basis and run through its children.
+              else
+                        score=tscore;
+                        if iter<4 && w==0
+                            [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,1,parents);
+                            scores=cat(1,tScore,scores);
+                            bArray=cat(1,rBAr,bArray);
+                            tPar=cat(1,rPar,tPar);
+                        elseif iter==4
+                            bArray=cat(1,tempBoard,bArray);
+                        end
+              end
                 end
                 %For the lowest level of iteration, don't iterate more.
                 %Just return the values of the states.
@@ -214,11 +236,11 @@ function computermove()
         return
     end
     function nextBoard = Minimax(iter,tBoard,turn)
-        %This function doesn't do much, but I thought it would have more
-        %use than it did when I started the project.
-        [boardArray,parentArray,rScore]=DFS(iter,tBoard,turn,0);
-        nextBoard=board;
-        %Find where to put the next piece
+    %This function doesn't do much, but I thought it would have more
+    %use than it did when I started the project.
+    [boardArray,parentArray,rScore]=DFS(iter,tBoard,turn,0);
+    nextBoard=board;
+    %Find where to put the next piece
     for up=1:size(nextBoard,1),
         if nextBoard(up,parentArray)~=0
             up=up-1;
@@ -226,5 +248,5 @@ function computermove()
         end
     end
     nextBoard(up,parentArray)=2;
-    end
+  end
 end
