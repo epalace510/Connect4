@@ -160,7 +160,7 @@ function computermove()
             end
                 %Pruning by checking for less than min (if trying to min)
                 if(otherTurn==1)
-                    if(tscore<=score)
+                    if(tscore<score)
                         score=tscore;
                         if iter<4 && w==0
                             [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,2,parents);
@@ -174,7 +174,7 @@ function computermove()
                 else
                     %Pruning by checking for greater than max (if trying to
                     %max)
-                    if(tscore>=score)
+                    if(tscore>score)
                         score=tscore;
                         if iter<4 && w==0
                             [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,1,parents);
