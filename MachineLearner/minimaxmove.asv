@@ -160,7 +160,7 @@ function computermove()
                 if(tscore<score)
                   score=tscore;
                   if iter<4 && w==0
-                    [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,1,parents);
+                    [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,2,parents);
                     scores=cat(1,tScore,scores);
                     bArray=cat(1,rBAr,bArray);
                     tPar=cat(1,rPar,tPar);
@@ -172,7 +172,7 @@ function computermove()
               else
                   score=tscore;
                   if iter<4 && w==0
-                    [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,1,parents);
+                    [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,2,parents);
                     scores=cat(1,tScore,scores);
                     bArray=cat(1,rBAr,bArray);
                     tPar=cat(1,rPar,tPar);
@@ -187,7 +187,7 @@ function computermove()
                     if(tscore>score)
                         score=tscore;
                         if iter<4 && w==0
-                            [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,2,parents);
+                            [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,1,parents);
                             scores=cat(1,tScore,scores);
                             bArray=cat(1,rBAr,bArray);
                             tPar=cat(1,rPar,tPar);
@@ -199,7 +199,7 @@ function computermove()
               else
                         score=tscore;
                         if iter<4 && w==0
-                            [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,2,parents);
+                            [rBAr,rPar,tScore]=DFS(iter+1,tempBoard,1,parents);
                             scores=cat(1,tScore,scores);
                             bArray=cat(1,rBAr,bArray);
                             tPar=cat(1,rPar,tPar);
@@ -222,7 +222,7 @@ function computermove()
         %Take either the min or the max (depending on who is going). Then
         %return that choice's score along with it's parent (the row the
         %tile would be originally placed in).
-        if(otherTurn==2)
+        if(otherTurn==1)
             index=find(scores==min(scores),1);
             oScore=min(scores);
             oScore=unique(oScore);

@@ -20,11 +20,6 @@ prevboard=zeros(6,7);
 whoseturn = 1;
 %disp('Your turn');
 
-% Reading in the file containing the values of past moves.
-fileID=fopen('moves.dat');
-moveSuccess=textscan(fileID,'%i %i %i');
-fclose(fildID);
-
 %Draw code
 %This line will call the click function when the mouse button is pressed.
 %Comment out for learning trials.
