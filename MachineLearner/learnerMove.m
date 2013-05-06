@@ -5,22 +5,14 @@ global movesTaken;
 %LEARNERMOVE Summary of this function goes here
 %   Detailed explanation goes here
 
-% First, load the stored moves (maybe do this in the playconnet4 method so
-% it's only done once. If so, use a global var.)
+% First, load the stored moves (done in playconnect4 into the moveSuccess
+% global var).
 
 % Next, read the current board state and determine the 7 possible next
 % moves it can make. Check to see the success of those moves previously.
 % Take the highest scoring one and execute it.
-%array(column,row)
-% state=cat(2,board(1,:),board(2,:),board(3,:),board(4,:),board(5,:),board(6,:),board(7,:));
-% for l=1:size(tempBoard,1),
-%     if(l>0)
-%         if tempBoard(l,n)~=0
-%             l=l-1;
-%             break;
-%         end
-%     end
-% end
+%array(row,column)
+
 score=0;
 for i=1:7
     tempBoard=board;
