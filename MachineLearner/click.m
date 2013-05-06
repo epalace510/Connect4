@@ -51,22 +51,6 @@ if(solved==0)
     if(solved==0)
         disp('Your turn');
     end
-    
-    
-% This should be the logic for either incentivising or disincentivising a
-% move
-elseif(solved==1)
-    for(i=1:size(movesTaken,1))
-        [row,col]=find(moveSuccess==movesTaken(1,i));
-        moveSuccess(row,3)=moveSuccess(row,3)+1;
-    end
-elseif(solved==2)
-    for(i=1:size(movesTaken,1))
-        [row,col]=find(moveSuccess==movesTaken(1,i));
-        moveSuccess(row,2)=moveSuccess(row,2)+1;
-        moveSuccess(row,3)=moveSuccess(row,3)+1;
-    end
-end
 end
 % end
 

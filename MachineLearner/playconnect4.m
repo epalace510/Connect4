@@ -21,9 +21,12 @@ whoseturn = 1;
 %disp('Your turn');
 
 % Reading in the file containing the values of past moves.
+%PROBLEM: CELL ARRAY IS UNHAPPY
+% specifically, the dimensions don't match when cat-ing and it's tricky to
+% make equality work (though it seems to work right now).
 fileID=fopen('moves.dat');
-moveSuccess=textscan(fileID,'%i %i %i');
-fclose(fildID);
+moveSuccess=textscan(fileID,'%s %d %d');
+fclose(fileID);
 
 %Draw code
 %This line will call the click function when the mouse button is pressed.
@@ -48,5 +51,28 @@ fclose(fildID);
     while solved==0
         click;
     end
+    % This should be the logic for either incentivising or disincentivising a
+% move
+if(solved==1)
+    for(i=1:size(movesTaken,1))
+        [row,col]=find(moveSuccess==movesTaken(1,i));
+        moveSuccess(row,3)=moveSuccess(row,3)+1;
+    end
+elseif(solved==2)
+    for(i=1:size(movesTaken,1))
+        [row,col]=find(moveSuccess==movesTaken(1,i));
+        moveSuccess(row,2)=moveSuccess(row,2)+1;
+        moveSuccess(row,3)=moveSuccess(row,3)+1;
+    end
+end
+%Writing the updated version of how moves did to the file.
+% This is only done at the end of the session, so this write only ever
+% occurs once per session (important during testing when a session can
+% include >1000 games)
+[nrows,ncols]=size(moveSuccess);
+fileID=fopen('moves.dat','w');
+for row=1:nrows
+    fprintf(fid,'%s %d %d\n', moveSuccess{row,:});
+end
 end
 
